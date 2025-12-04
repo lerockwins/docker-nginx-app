@@ -3,8 +3,8 @@ ipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        IMAGE_NAME = "mohdparvez23/pythonapp"
-        CONTAINER_NAME = "pythonapp"
+        IMAGE_NAME = "mohdparvez23/my_app"
+        CONTAINER_NAME = "my_app"
     }
 
     stages {
