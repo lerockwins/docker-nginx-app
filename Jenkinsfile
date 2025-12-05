@@ -46,7 +46,7 @@ pipeline {
 
                    docker run -d \
                     --name $CONTAINER_NAME \
-                    -p 80:80 \
+                    -p 80:81 \
                     $IMAGE_NAME:$BUILD_NUMBER
                 '''
             }
