@@ -1,13 +1,10 @@
 # Use Alpine as base image
-FROM alpine:latest
-
-RUN apk update && apk add --no-cache nginx
+FROM nginx:latest 
 
 RUN mkdir -p /usr/share/nginx/html
 
-COPY index.html /usr/share/nginx/html/index.html
+COPY index.html /usr/share/nginx/html/
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
-
