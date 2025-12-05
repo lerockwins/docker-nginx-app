@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds')
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         IMAGE_NAME = "my_app"
         CONTAINER_NAME = "my_app"
     }
