@@ -1,26 +1,34 @@
 pipeline {
     agent any
 
-    // environment {
-    //     DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    //     IMAGE_NAME = "haji4747/my_app"
-    //     CONTAINER_NAME = "my_app"
-    // }
+    environment {
+        // DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+        IMAGE_NAME = "haji4747/my_app"
+        CONTAINER_NAME = "my_app"
+    }
 
     stages {
 
         stage('Build docker image') {
             steps {
-                sh 'sudo docker build -t haji4747_my_app:$BUILD_NUMBER .'
+                sh 'sudo docker build -t $IMAGE_NAME:$BUILD_NUMBER .'
             }
         }
 
         stage('Login to Docker Hub') {
-            steps {
-                sh '''
-                  echo $DOCKERHUB_CREDENTIALS  | \
-                  sudo docker login -u $DOCKERHUB_CREDENTIALS  --password-stdin
-                '''
+            steps{
+                script {
+                    withCredentials([usernameColonPassword(credentialsId: 'dockerhub-creds', variable: 'USERPASS')]) {
+                        // The USERPASS environment variable is now available
+                        // You can parse it or use it directly as needed
+                        def parts = env.USERPASS.split(':')
+                        def username = parts[0]
+                        def password = parts[1]
+    
+                        sh "echo 'Logging in to Docker Hub with username: ${username}'"
+                        sh "echo ${password} | docker login --username ${username} --password-stdin"
+                    }
+                }
             }
         }
 
